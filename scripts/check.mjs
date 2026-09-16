@@ -9,7 +9,7 @@ assert.equal(manifest.version, JSON.parse(fs.readFileSync('package.json')).versi
 assert.deepEqual([...manifest.permissions].sort(), ['declarativeNetRequest', 'scripting', 'storage']);
 assert.equal(manifest.host_permissions.length, 3);
 for (const host of manifest.host_permissions) assert.match(host, /^https:\/\/(www\.|m\.)?youtube\.com\/\*$/);
-const files = fs.readdirSync(dir, { recursive: true }).filter(f => fs.statSync(path.join(dir, f)).isFile());
+const files = fs.readdirSync(dir, { recursive: true }).filter(f => !f.split(path.sep).includes('_metadata') && fs.statSync(path.join(dir, f)).isFile());
 for (const f of files.filter(f => f.endsWith('.js'))) execFileSync(process.execPath, ['--check', path.join(dir, f)]);
 for (const f of files.filter(f => f.endsWith('.json'))) JSON.parse(fs.readFileSync(path.join(dir, f)));
 const required = [manifest.background.service_worker, manifest.action.default_popup, ...Object.values(manifest.icons), 'LICENSE.txt', 'THIRD_PARTY_NOTICES.md', ...manifest.content_scripts.flatMap(s => [...s.js, ...s.css]), ...manifest.declarative_net_request.rule_resources.map(r => r.path)];

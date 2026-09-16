@@ -4,7 +4,7 @@ Version: 0.1.0. Development build; not submitted to Chrome Web Store.
 
 ## Automated checks
 
-18 Node tests pass: field filtering, ordinary content preservation, Shorts true/false flags, cyclic/frozen/bounded data, endpoint host checks, early initial-response hooks, JSON errors/revivers, fetch response handling and failures, XHR timing/reuse/types, duplicate injection, background enable/disable, rollback, serialization and sender validation.
+18 Node tests pass locally and in GitHub Actions: field filtering, ordinary content preservation, Shorts true/false flags, cyclic/frozen/bounded data, endpoint host checks, early initial-response hooks, JSON errors/revivers, fetch response handling and failures, XHR timing/reuse/types, duplicate injection, background enable/disable, rollback, serialization and sender validation.
 
 Static checks validate MV3 manifest, file references, JavaScript syntax, scoped permissions and DNR rule shape. These do not substitute for Chrome's own runtime or real ad-inventory testing.
 
@@ -16,7 +16,7 @@ A separate existing profile without uBlock was used. The user's existing uBlock 
 - Popup showed Protection enabled and a valid rules revision.
 - Pause saved successfully; reopening the popup showed Protection paused.
 - In the paused state, a real YouTube watch page displayed a Base44 pre-roll with Sponsored and Skip controls, plus a companion advertisement. This establishes that the test profile receives ads.
-- Enabled playback comparison: pending completion; foreground window was repeatedly changed during the test.
+- Enabled playback comparison: not completed. Native Chrome control repeatedly stopped because the foreground window changed while the user was working. No enabled-state ad-removal claim is made. Last confirmed setting was Protection paused; inspect the popup before resuming tests.
 
 ## Release gate
 
