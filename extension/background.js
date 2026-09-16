@@ -25,6 +25,22 @@ async function state() {
     version: chrome.runtime.getManifest().version, revision: RULE_REVISION };
 }
 
+async function reloadYouTubeTabs() {
+  try {
+    const tabs = await chrome.tabs.query({});
+    const supported = url => {
+      try { const u = new URL(url); return u.protocol === 'https:' && ['youtube.com', 'www.youtube.com', 'm.youtube.com'].includes(u.hostname); }
+      catch { return false; }
+    };
+    const results = await Promise.allSettled(tabs.filter(tab => supported(tab.url)).map(async tab => {
+      // Recheck after querying: a tab may have navigated to another site.
+      const current = await chrome.tabs.get(tab.id);
+      if (supported(current.url)) await chrome.tabs.reload(tab.id);
+    }));
+    return results.some(result => result.status === 'rejected');
+  } catch { return true; }
+}
+
 async function setEnabled(enabled) {
   const previous = await desired();
   try {
@@ -34,7 +50,10 @@ async function setEnabled(enabled) {
     try { await configure(previous); } catch { /* GET_STATE surfaces a degraded state. */ }
     throw error;
   }
-  return state();
+  // Reload after persisting: new content scripts must see the new preference.
+  // Failure to reload does not undo a successfully saved setting.
+  const reloadFailed = previous !== enabled ? await reloadYouTubeTabs() : false;
+  return { ...await state(), reloadFailed };
 }
 
 chrome.runtime.onInstalled.addListener(() => { enqueue(async () => configure(await desired())).catch(console.error); });

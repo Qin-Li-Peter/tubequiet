@@ -2,11 +2,13 @@ const { test } = require('node:test');
 const assert = require('node:assert/strict');
 const vm = require('node:vm');
 const fs = require('node:fs');
-function setup() {
+function setup(tabs = [], failReload = false) {
   const source = fs.readFileSync('extension/background.js', 'utf8').replace(/^import .*;$/m, '');
   let listener, enabled, registered = false, rules = true, fail = false;
+  const reloaded = [];
   const chrome = {
-    runtime: { id: 'test', getURL: p => `chrome-extension://test/${p}`, getManifest: () => ({version:'0.1.0'}),
+    tabs: { query: async()=>tabs, get: async id=>tabs.find(tab=>tab.id===id), reload: async id=>{ if(failReload) throw Error("closed tab"); reloaded.push(id); } },
+    runtime: { id: 'test', getURL: p => `chrome-extension://test/${p}`, getManifest: () => ({version:'0.1.1'}),
       onInstalled: {addListener(){}}, onStartup:{addListener(){}}, onMessage:{addListener(fn){listener=fn;}} },
     storage:{local:{get:async()=>({enabled}),set:async v=>{enabled=v.enabled;}}},
     scripting:{getRegisteredContentScripts:async()=>registered?[{id:'page'}]:[], registerContentScripts:async()=>{registered=true;},
@@ -15,9 +17,9 @@ function setup() {
       if(fail){fail=false;throw Error('simulated failure');} rules=v.enableRulesetIds.length>0;
     }}, action:{setBadgeText:async()=>{},setBadgeBackgroundColor:async()=>{}}
   };
-  vm.runInNewContext(source,{chrome,console,SCRIPT:{id:'page'},RULESET:'ads',RULE_REVISION:'test'});
+  vm.runInNewContext(source,{chrome,console,URL,SCRIPT:{id:'page'},RULESET:'ads',RULE_REVISION:'test'});
   const sender={id:'test',url:'chrome-extension://test/popup/popup.html'};
-  return {send:message=>new Promise(resolve=>listener(message,sender,resolve)),listener,sender,
+  return {reloaded,send:message=>new Promise(resolve=>listener(message,sender,resolve)),listener,sender,
     failNext(){fail=true;},snapshot:()=>({enabled,registered,rules})};
 }
 test('background repairs configuration, pauses, resumes and reports actual state', async()=>{
@@ -43,4 +45,15 @@ test('webpage, content script, malformed and foreign extension messages are reje
  assert.equal(app.listener({type:'SET_ENABLED',enabled:false},sender,reply),false);
  assert.equal(app.listener({type:'SET_ENABLED',enabled:'false'},app.sender,reply),false);
  assert.equal(app.listener({type:'UNKNOWN'},app.sender,reply),false);
+});
+
+test('changing setting reloads only exact supported HTTPS hosts, not unrelated tabs',async()=>{
+ const app=setup([{id:1,url:'https://www.youtube.com/watch?v=x'},{id:2,url:'https://m.youtube.com/'},{id:3,url:'https://youtube.com/'},{id:4,url:'https://studio.youtube.com/'},{id:5,url:'https://www.youtube.com.evil.test/'},{id:6},{id:7,url:'http://youtube.com/'}]);
+ await app.send({type:'SET_ENABLED',enabled:false}); assert.deepEqual(app.reloaded,[1,2,3]);
+ await app.send({type:'SET_ENABLED',enabled:false}); assert.deepEqual(app.reloaded,[1,2,3]);
+});
+test('failed tab reload preserves saved setting and reports manual reload needed',async()=>{
+ const app=setup([{id:1,url:'https://www.youtube.com/'}],true);
+ const state=await app.send({type:'SET_ENABLED',enabled:false});
+ assert.equal(state.ok,true);assert.equal(state.enabled,false);assert.equal(state.reloadFailed,true);assert.equal(state.healthy,true);
 });

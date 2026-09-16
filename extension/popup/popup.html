@@ -2,19 +2,13 @@
 <html lang="en">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TubeQuiet</title><link rel="stylesheet" href="popup.css"></head>
 <body>
-  <header><img src="../icons/icon-48.png" width="36" height="36" alt=""><div><strong>TubeQuiet</strong><span>Made for a quieter YouTube.</span></div><span class="version" id="version">v0.1.0</span></header>
-  <main>
-    <section class="status-card" aria-labelledby="status-title">
-      <div class="eyebrow"><span id="dot" class="dot"></span><span id="status-title">Checking protection…</span></div>
-      <h1 id="headline">Less interruption.<br>More of your video.</h1>
-      <p>Local ad filtering. YouTube only.</p>
-      <label class="toggle-row"><span>Ad protection</span><input id="enabled" type="checkbox" role="switch" disabled><span class="track" aria-hidden="true"></span></label>
-    </section>
-    <div class="features"><div><span class="check">✓</span> Player ad filtering</div><div><span class="check">✓</span> Cleaner ad placements</div><div><span class="check">✓</span> No analytics. No account.</div></div>
-    <section class="notice" aria-label="Page status"><p id="page-status">Checking this tab…</p><button id="reload" disabled>Reload YouTube tab <span aria-hidden="true">↻</span></button></section>
-    <p id="feedback" class="feedback" role="status" aria-live="polite"></p>
-    <p class="limits">Filtering may vary as YouTube changes. In-video creator sponsorships are not removed.</p>
-  </main>
-  <footer><a href="../privacy.html" target="_blank" rel="noopener">Privacy &amp; source</a><span id="revision">All filtering stays local</span></footer>
-  <script src="popup.js" type="module"></script>
+<main class="row">
+  <div><h1>TubeQuiet</h1><p id="status" role="status">Loading…</p></div>
+  <label class="toggle" title="Block ads. Changing this setting reloads open YouTube pages.">
+    <input id="enabled" type="checkbox" role="switch" aria-label="Block ads" aria-describedby="status" disabled>
+    <span class="track" aria-hidden="true"></span>
+  </label>
+</main>
+<p id="error" role="alert" hidden></p>
+<script src="popup.js" type="module"></script>
 </body></html>

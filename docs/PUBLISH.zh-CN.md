@@ -12,9 +12,9 @@
 
 ## 已准备的材料
 
-- `dist/tubequiet-0.1.0.zip`：上传商店的插件包；不要上传 source.zip。
-- `dist/tubequiet-0.1.0-source.zip`：完整对应源码。
-- 128px PNG 图标、440×280 小宣传图（store/assets）；图标原稿也已提供。
+- `dist/tubequiet-0.1.1.zip`：上传商店的插件包；不要上传 source.zip。
+- `dist/tubequiet-0.1.1-source.zip`：完整对应源码。
+- 128px PNG 图标、440×280 小宣传图（store/assets）；图标可通过 scripts/make-assets.py 重新生成。
 - 英文名称、短描述、详细介绍、单一用途、三项权限解释、审核测试步骤：`store/LISTING.md`。
 - 本地隐私页面、公开隐私政策草稿、GPL 授权与上游说明。
 

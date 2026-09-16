@@ -1,13 +1,14 @@
 # TubeQuiet
 
-An English-only, YouTube-focused Chrome Manifest V3 extension. Version 0.1.0 is a development release. Filtering is best effort; YouTube experiments and server-side ads may defeat it. See [validation](docs/VALIDATION.md) before publishing.
+An English-only, YouTube-focused Chrome Manifest V3 extension. Version 0.1.1 is a development release. Filtering is best effort; YouTube experiments and server-side ads may defeat it. See [validation](docs/VALIDATION.md) before publishing.
 
 ## Install for development
 
 1. Open `chrome://extensions` in a Chrome profile without another ad blocker.
 2. Enable Developer mode, choose **Load unpacked**, select this repository's `extension` directory.
 3. Open TubeQuiet from the extensions menu and reload YouTube tabs.
-4. Use **Ad protection** to pause/resume. Reload all already-open YouTube tabs after changing it.
+4. Use the switch to enable/disable blocking. Open YouTube tabs reload automatically after a change.
+5. Privacy and source information is available under the extension’s **Options** in Chrome.
 
 Chrome 120+; desktop `www.youtube.com`, `youtube.com`, and `m.youtube.com`. No support promise for YouTube Music, Studio, third-party embedded players, paid content access, or creator sponsorship segments.
 
@@ -38,7 +39,7 @@ flowchart TD
   I --> CSS[CSS hides explicit ad renderers]
 ```
 
-Only recognized player advertising fields and explicitly marked Shorts ads are pruned. Streaming URLs, playback errors, subtitles and ordinary video data are retained. Three local network rules target ad requests with YouTube initiators. The popup checks registration and ruleset state, rather than inventing an ad-block count. CSS toggles immediately; page-world hooks need a reload to fully pause.
+Only recognized player advertising fields and explicitly marked Shorts ads are pruned. Streaming URLs, playback errors, subtitles and ordinary video data are retained. Three local network rules target ad requests with YouTube initiators. The popup checks registration and ruleset state, rather than inventing an ad-block count. CSS follows the local preference. After a change, the background worker reloads supported YouTube tabs so that page-world hooks also match the new setting. Reload errors are reported in the popup.
 
 There is no server, analytics, remote executable code, account system or remotely downloaded rule interpreter. Only one boolean preference is stored locally. YouTube response data is inspected in memory and is not transmitted by TubeQuiet.
 
@@ -48,7 +49,7 @@ There is no server, analytics, remote executable code, account system or remotel
 - [English listing and permission explanations](store/LISTING.md)
 - `extension/privacy.html`: in-product privacy and source explanation
 - `store/PRIVACY.md`: public privacy-page draft; fill publisher contact before hosting
-- `store/assets/`: original icon and small promotional tile
+- `store/assets/`: small promotional tile; `scripts/make-assets.py` generates the packaged icons
 - [Validation and release gate](docs/VALIDATION.md)
 
 ## License and reference

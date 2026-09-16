@@ -12,7 +12,7 @@ TubeQuiet reduces supported advertising on YouTube. It does not collect or trans
 
 TubeQuiet reads and modifies recognized YouTube player advertising data in memory and hides supported ad elements. Page data is not stored as browsing history, sent to the developer, or sold. The extension stores only an enabled/paused preference in Chrome's local extension storage. It does not use Chrome Sync.
 
-The popup checks whether the current tab is on a supported YouTube host to offer a reload button; it does not retain or transmit that URL. Normal requests made by YouTube remain subject to YouTube's own policies. Chrome Web Store distribution and updates are handled by Google.
+When you change protection, the background worker checks open tab URLs and reloads tabs on supported YouTube hosts. It does not retain or transmit those URLs. Normal requests made by YouTube remain subject to YouTube's own policies. Chrome Web Store distribution and updates are handled by Google.
 
 ## Permissions
 
@@ -20,7 +20,7 @@ YouTube host access and scripting enable local player-data and page filtering. d
 
 ## Your choices
 
-Pause protection from the popup and reload every open YouTube tab to fully apply the change. Uninstalling the extension removes its local extension storage. No developer-held user database exists to request deletion from.
+Pause protection from the popup; open YouTube tabs reload automatically to apply the change. Uninstalling the extension removes its local extension storage. No developer-held user database exists to request deletion from.
 
 ## Limited use and changes
 
