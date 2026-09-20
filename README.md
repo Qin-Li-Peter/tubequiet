@@ -2,6 +2,10 @@
 
 An English-only, YouTube-focused Chrome Manifest V3 extension. Version 0.1.1 is a development release. Filtering is best effort; YouTube experiments and server-side ads may defeat it. See [validation](docs/VALIDATION.md) before publishing.
 
+## Installation
+
+**[中文安装指南（从开启开发者模式开始）](docs/INSTALL.zh-CN.md)** — for friends installing the shared ZIP; no coding required.
+
 ## Install for development
 
 1. Open `chrome://extensions` in a Chrome profile without another ad blocker.
