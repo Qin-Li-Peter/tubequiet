@@ -1,5 +1,7 @@
 # TubeQuiet 安装指南
 
+[English](INSTALL.en.md) | **简体中文**
+
 适用于电脑上的 Chrome（Windows / macOS，120 或更新版本）。直接从 GitHub 下载即可安装，无需编程、安装 Git 或注册开发者账号。
 
 ## 安装（约 2 分钟）
@@ -47,3 +49,5 @@
 - **卸载**：在 `chrome://extensions` 找到 TubeQuiet，点击 **移除**。移除后即可删除安装文件夹。
 
 安装方式参考：[Chrome 官方本地扩展安装说明](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)。
+
+[返回 README](../README.zh-CN.md)

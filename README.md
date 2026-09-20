@@ -1,10 +1,12 @@
 # TubeQuiet
 
+**English** | [简体中文](README.zh-CN.md)
+
 An English-only, YouTube-focused Chrome Manifest V3 extension. Version 0.1.1 is a development release. Filtering is best effort; YouTube experiments and server-side ads may defeat it. See [validation](docs/VALIDATION.md) before publishing.
 
 ## Installation
 
-**[中文安装指南（从 GitHub 下载到安装）](docs/INSTALL.zh-CN.md)** — download directly from GitHub and install in Chrome; no coding required.
+**[Installation guide (download from GitHub and install)](docs/INSTALL.en.md)** — download directly from GitHub and install in Chrome; no coding required.
 
 ## Install for development
 
