@@ -4,7 +4,7 @@ An English-only, YouTube-focused Chrome Manifest V3 extension. Version 0.1.1 is 
 
 ## Installation
 
-**[中文安装指南（从开启开发者模式开始）](docs/INSTALL.zh-CN.md)** — for friends installing the shared ZIP; no coding required.
+**[中文安装指南（从 GitHub 下载到安装）](docs/INSTALL.zh-CN.md)** — download directly from GitHub and install in Chrome; no coding required.
 
 ## Install for development
 
