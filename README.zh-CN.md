@@ -2,7 +2,11 @@
 
 [English](README.md) | **简体中文**
 
-专注于 YouTube 的 Chrome Manifest V3 扩展，插件界面为英文。0.1.1 是开发版本，广告过滤效果可能受 YouTube 实验功能和服务端广告影响。发布前请查看[验证记录](docs/VALIDATION.md)（英文）。
+专注于 YouTube 的 Chrome Manifest V3 扩展，插件界面为英文。0.2.0 是开发版本，广告过滤效果可能受 YouTube 实验功能和服务端广告影响。发布前请查看[验证记录](docs/VALIDATION.md)（英文）。
+
+## 0.2.0 更新
+
+更新 YouTube 反检测应对：引入限定到 YouTube 的 uBOL 专用脚本与广告状态替代脚本。当前 Chrome 样本未出现停用屏蔽器提示，具体改动与验证边界见[更新记录](CHANGELOG.md)和[验证记录](docs/VALIDATION.md)。
 
 ## 安装
 
@@ -38,14 +42,14 @@ flowchart TD
   B --> S[本地开关设置]
   B --> D[Chrome 声明式请求规则]
   B --> R[在 document_start 注册 MAIN 脚本]
-  R --> H[初始响应 / JSON / fetch / XHR 适配]
-  H --> C[有遍历上限的播放器数据过滤器]
+  R --> H[本地打包的 uBOL YouTube 专用脚本]
+  H --> C[请求响应处理 / 实验开关 / iframe 处理]
   C --> Y[YouTube 读取过滤后的响应]
   S --> I[隔离环境中的内容脚本]
   I --> CSS[CSS 隐藏明确标记的广告元素]
 ```
 
-只删除已识别的播放器广告字段和明确标记的 Shorts 广告。视频流地址、播放错误、字幕和普通视频数据会保留。三条本地网络规则处理由 YouTube 发起的广告请求。弹窗检查实际的脚本注册和规则集状态，不提供虚构的拦截计数。CSS 遵循本地设置；切换后，后台服务刷新支持的 YouTube 标签页，使页面脚本也应用新设置。刷新失败时会在弹窗中提示。
+采用 uBOL 2026.914.1325 的 YouTube 专用脚本绑定，处理广告字段、特定请求参数、实验开关和 iframe API 绕行。八条本地网络规则包含优先于阻断的广告状态替代脚本。旧手写过滤器保留作历史参考，不再注入。弹窗检查实际的脚本注册和规则集状态，不提供虚构的拦截计数。CSS 遵循本地设置；切换后，后台服务刷新支持的 YouTube 标签页，使页面脚本也应用新设置。刷新失败时会在弹窗中提示。
 
 没有服务器、统计分析、远程执行代码、账号系统或远程下载的规则解释器。本地只存储一个布尔开关设置。YouTube 响应数据仅在内存中检查，TubeQuiet 不会将其传出。
 
@@ -60,4 +64,4 @@ flowchart TD
 
 ## 许可证与参考来源
 
-使用 GPL-3.0-or-later。过滤方法以及字段、选择器研究参考了 uBlock Origin / uBlock Origin Lite，未打包其运行时。具体版本见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)（英文）。分发的扩展包含可读源码及 GPL 许可证；发布时须保留许可证和归属说明，并向接收者提供对应源码及 GPL 授予的权利。开发仓库是否私有不改变分发义务。TubeQuiet 独立于 Google、YouTube 和 uBlock Origin。
+使用 GPL-3.0-or-later。过滤方法以及字段、选择器研究参考了 uBlock Origin / uBlock Origin Lite，本版本包含其 YouTube 专用脚本运行时和广告状态替代脚本，并保留归属说明。具体版本见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)（英文）。分发的扩展包含可读源码及 GPL 许可证；发布时须保留许可证和归属说明，并向接收者提供对应源码及 GPL 授予的权利。开发仓库是否私有不改变分发义务。TubeQuiet 独立于 Google、YouTube 和 uBlock Origin。

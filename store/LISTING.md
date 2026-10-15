@@ -29,8 +29,9 @@ Reduce advertising interruptions and supported advertising placements on YouTube
 
 - storage: Save only the user's enabled/paused preference locally on the device.
 - scripting: Register or unregister the bundled document-start MAIN-world scripts that filter recognized YouTube player advertising data.
-- declarativeNetRequest: Apply three packaged rules to block selected advertising requests initiated by YouTube. No remote rules are downloaded.
+- declarativeNetRequest: Apply eight packaged rules to block selected advertising requests initiated by YouTube and redirect the ad-status script to a local replacement. No remote rules are downloaded.
 - host access to https://www.youtube.com/*, https://youtube.com/*, https://m.youtube.com/*: Apply player-data filtering and cosmetic ad hiding on YouTube, and reload supported open tabs when the user changes protection. No all-sites host access.
+- host access to https://*.doubleclick.net/*: Allow the scoped ad-status resource redirect; no content script is injected on DoubleClick pages.
 - Remote code: No. All executable JavaScript and filtering rules are included in the submitted ZIP.
 
 ## Privacy disclosure guidance

@@ -2,7 +2,11 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-An English-only, YouTube-focused Chrome Manifest V3 extension. Version 0.1.1 is a development release. Filtering is best effort; YouTube experiments and server-side ads may defeat it. See [validation](docs/VALIDATION.md) before publishing.
+An English-only, YouTube-focused Chrome Manifest V3 extension. Version 0.2.0 is a development release. Filtering is best effort; YouTube experiments and server-side ads may defeat it. See [validation](docs/VALIDATION.md) before publishing.
+
+## 0.2.0 update
+
+Updated YouTube anti-adblock handling using scoped uBOL scriptlets and an ad-status replacement. [Changes](CHANGELOG.md) · [Test scope](docs/VALIDATION.md).
 
 ## Installation
 
@@ -38,14 +42,14 @@ flowchart TD
   B --> S[Local enabled preference]
   B --> D[Chrome declarative request rules]
   B --> R[Register MAIN script at document_start]
-  R --> H[Initial response / JSON / fetch / XHR adapters]
-  H --> C[Bounded player-data sanitizer]
+  R --> H[Bundled uBOL YouTube scriptlets]
+  H --> C[Request and response edits / experiment flags / iframe handling]
   C --> Y[YouTube consumes filtered response]
   S --> I[Isolated content script]
   I --> CSS[CSS hides explicit ad renderers]
 ```
 
-Only recognized player advertising fields and explicitly marked Shorts ads are pruned. Streaming URLs, playback errors, subtitles and ordinary video data are retained. Three local network rules target ad requests with YouTube initiators. The popup checks registration and ruleset state, rather than inventing an ad-block count. CSS follows the local preference. After a change, the background worker reloads supported YouTube tabs so that page-world hooks also match the new setting. Reload errors are reported in the popup.
+YouTube bindings from uBOL 2026.914.1325 handle player-data pruning, targeted request edits, experiment flags and iframe API reuse. Eight local network rules include an ad-status script redirect above the broad block rule. The old handwritten sanitizer remains as historical reference and is not injected. The popup checks registration and ruleset state, rather than inventing an ad-block count. CSS follows the local preference. After a change, the background worker reloads supported YouTube tabs so that page-world hooks also match the new setting. Reload errors are reported in the popup.
 
 There is no server, analytics, remote executable code, account system or remotely downloaded rule interpreter. Only one boolean preference is stored locally. YouTube response data is inspected in memory and is not transmitted by TubeQuiet.
 
@@ -60,4 +64,6 @@ There is no server, analytics, remote executable code, account system or remotel
 
 ## License and reference
 
-GPL-3.0-or-later. uBlock Origin / uBlock Origin Lite informed the filtering approach and field/selector research; their runtime is not bundled. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for exact revisions. The distributed extension includes its readable source and GPL license. Keep these in releases, preserve notices and give recipients corresponding source and GPL rights. A private development repository does not remove distribution obligations. TubeQuiet is independent of Google, YouTube and uBlock Origin.
+GPL-3.0-or-later. uBlock Origin / uBlock Origin Lite informed the filtering approach and field/selector research; the YouTube scriptlet runtime and ad-status replacement are bundled with attribution. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for exact revisions. The distributed extension includes its readable source and GPL license. Keep these in releases, preserve notices and give recipients corresponding source and GPL rights. A private development repository does not remove distribution obligations. TubeQuiet is independent of Google, YouTube and uBlock Origin.
+
+To refresh the pinned local upstream import: `node scripts/import-ubol.mjs /path/to/uBOL-home`, then review changes and run `npm test` and `npm run check`. No automatic remote updates are performed.

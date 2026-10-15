@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "TubeQuiet \u2014 YouTube Ad Control",
   "short_name": "TubeQuiet",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Reduce ads on YouTube with local filtering, a simple pause switch, and no analytics or account required.",
   "minimum_chrome_version": "120",
   "permissions": [
@@ -13,7 +13,8 @@
   "host_permissions": [
     "https://www.youtube.com/*",
     "https://m.youtube.com/*",
-    "https://youtube.com/*"
+    "https://youtube.com/*",
+    "https://*.doubleclick.net/*"
   ],
   "background": {
     "service_worker": "background.js",
@@ -64,5 +65,18 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'none'; base-uri 'none'"
   },
-  "options_page": "privacy.html"
+  "options_page": "privacy.html",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "web_accessible_resources/ad-status.js"
+      ],
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://m.youtube.com/*",
+        "https://youtube.com/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
 }

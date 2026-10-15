@@ -2,7 +2,7 @@
 
 Draft for hosting before publication — replace the publisher and contact fields below.
 
-Effective date: 2026-09-17
+Effective date: 2026-10-15
 Publisher: [YOUR PUBLISHER NAME]
 Contact: [YOUR PUBLIC SUPPORT EMAIL]
 
@@ -16,7 +16,7 @@ When you change protection, the background worker checks open tab URLs and reloa
 
 ## Permissions
 
-YouTube host access and scripting enable local player-data and page filtering. declarativeNetRequest enables packaged advertising-request rules scoped to YouTube initiators. storage retains the local preference.
+YouTube host access and scripting enable local player-data and page filtering. declarativeNetRequest enables packaged advertising-request rules scoped to YouTube initiators. DoubleClick host access allows a local ad-status replacement for supported YouTube initiators; no content scripts run on DoubleClick pages. storage retains the local preference.
 
 ## Your choices
 

@@ -74,5 +74,109 @@
         "music.youtube.com"
       ]
     }
+  },
+  {
+    "id": 4,
+    "priority": 16,
+    "action": {
+      "type": "redirect",
+      "redirect": {
+        "extensionPath": "/web_accessible_resources/ad-status.js"
+      }
+    },
+    "condition": {
+      "urlFilter": "||doubleclick.net/instream/ad_status.js^",
+      "resourceTypes": [
+        "script",
+        "xmlhttprequest"
+      ],
+      "initiatorDomains": [
+        "www.youtube.com",
+        "m.youtube.com",
+        "youtube.com"
+      ],
+      "excludedInitiatorDomains": [
+        "studio.youtube.com",
+        "music.youtube.com"
+      ]
+    }
+  },
+  {
+    "id": 5,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||youtube.com/youtubei/v1/player/ad_break",
+      "initiatorDomains": [
+        "www.youtube.com",
+        "m.youtube.com",
+        "youtube.com"
+      ],
+      "excludedInitiatorDomains": [
+        "studio.youtube.com",
+        "music.youtube.com"
+      ]
+    }
+  },
+  {
+    "id": 6,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||www.youtube.com/get_midroll_",
+      "initiatorDomains": [
+        "www.youtube.com",
+        "m.youtube.com",
+        "youtube.com"
+      ],
+      "excludedInitiatorDomains": [
+        "studio.youtube.com",
+        "music.youtube.com"
+      ]
+    }
+  },
+  {
+    "id": 7,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "urlFilter": "||m.youtube.com/get_midroll_",
+      "initiatorDomains": [
+        "www.youtube.com",
+        "m.youtube.com",
+        "youtube.com"
+      ],
+      "excludedInitiatorDomains": [
+        "studio.youtube.com",
+        "music.youtube.com"
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "priority": 1,
+    "action": {
+      "type": "block"
+    },
+    "condition": {
+      "requestDomains": [
+        "googlesyndication.com"
+      ],
+      "initiatorDomains": [
+        "www.youtube.com",
+        "m.youtube.com",
+        "youtube.com"
+      ],
+      "excludedInitiatorDomains": [
+        "studio.youtube.com",
+        "music.youtube.com"
+      ]
+    }
   }
 ]
